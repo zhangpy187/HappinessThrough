@@ -47,7 +47,7 @@ class Request
 
     }
 
-    public function getDealImportDatas(string $idCard, string $pcode)
+    public function getDealImportDatas(string $idCard, string $pcode): array
     {
         $nonce = time() . "." . rand(0000, 9999);
         $time = date("YmdHis", time());
@@ -82,18 +82,17 @@ class Request
         ];
         $response = $this->client->post($this->uri, $paylod)->getBody()->getContents();
         $response = json_decode($response, true);
-        var_dump($response);
         if (!isset($response['E_RESPONSE']['RSP_BASEINFO']['RSP_STATUS_MSG'])) {
             return ['code' => 201, 'message' => '请求失败'];
         }
-        if ($response['E_RESPONSE']['RSP_BASEINFO']['RSP_STATUS_MSG'] != '处理成功'){
+        if ($response['E_RESPONSE']['RSP_BASEINFO']['RSP_STATUS_MSG'] != '处理成功') {
             return ['code' => 201, 'message' => '请求失败', 'data' => $response['E_RESPONSE']['RSP_BASEINFO']['RSP_STATUS_MSG']];
         }
-        if (empty($response['E_RESPONSE']['MESSAGE']['RSP_ITEM']['APIRESPRESUL_TESB']['DATA'])){
+        if (empty($response['E_RESPONSE']['MESSAGE']['RSP_ITEM']['APIRESPRESUL_TESB']['DATA'])) {
             return [];
         }
         $data = $response['E_RESPONSE']['MESSAGE']['RSP_ITEM']['APIRESPRESUL_TESB']['DATA'];
-        foreach ($data as $key=>$val){
+        foreach ($data as $key => $val) {
             $reords[$key]['order_sn'] = $val['HOUSE_NAME'];
             $reords[$key]['order_status'] = 0;
             $reords[$key]['name'] = $val['CUS_NAME'];
