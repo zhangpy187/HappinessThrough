@@ -6,24 +6,13 @@ use GuzzleHttp\Client;
 
 class HappinessPullDeal
 {
-    /**
-     * 开发地址
-     * @var string
-     */
-    protected $dev = 'https://esbqas.sunac.com.cn:8442/WP_SUNAC/APP_FACESR_SERVICES/Proxy_Services/TA_SALEAPP2/FACESR_E667_clueSyncToFaceSR_PS';
-    /**
-     * 生产环境地址
-     * @var string
-     */
-    protected $prod = 'https://esb.sunac.com.cn:8443/WP_SUNAC/APP_FACESR_SERVICES/Proxy_Services/TA_SALEAPP2/FACESR_E667_clueSyncToFaceSR_PS';
-
     protected $client;
     protected $uri = '';
     protected $headers = [];
-    protected $reqsrcsys = 'BS-FACESR-Q';
-    protected $reqtarsys = 'BS-SALEAPP2-Q';
-    protected $userName = 'ESB_Q_FACESR';
-    protected $password = 'facesr@esb';
+    protected $reqsrcsys = '';
+    protected $reqtarsys = '';
+    protected $userName = '';
+    protected $password = '';
 
     public function __construct($config = [])
     {
@@ -31,14 +20,6 @@ class HappinessPullDeal
         $this->reqsrcsys = $config['reqsrcsys'];
         $this->reqtarsys = $config['reqtarsys'];
         $this->headers = ["Authorization:Basic " . base64_encode($config['userName'] . ':' . $config['password']), "Content-Type:text/plain"];
-//        if ($this->flag == 'prod') {
-//            $this->uri = $this->prod;
-//            $this->userName = 'ESB_P_FACESR';
-//            $this->password = 'facesrp@esb';
-//            $this->headers = ["Authorization:Basic " . base64_encode($this->userName . ':' . $this->password), "Content-Type:text/plain"];
-//            $this->reqsrcsys = 'BS-FACESR-P';
-//            $this->reqtarsys = 'BS-SALEAPP2-P';
-//        }
         $this->client = new Client();
 
     }
