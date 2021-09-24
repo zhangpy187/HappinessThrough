@@ -4,7 +4,7 @@ namespace RongChuang\HappinessThrough;
 
 use GuzzleHttp\Client;
 
-class Request
+class HappinessPullDeal
 {
     /**
      * 开发地址
@@ -17,11 +17,6 @@ class Request
      */
     protected $prod = 'https://esb.sunac.com.cn:8443/WP_SUNAC/APP_FACESR_SERVICES/Proxy_Services/TA_SALEAPP2/FACESR_E667_clueSyncToFaceSR_PS';
 
-    /**
-     * 启用环境
-     * @var string
-     */
-    protected $flag = 'prod';
     protected $client;
     protected $uri = '';
     protected $headers = [];
@@ -30,19 +25,20 @@ class Request
     protected $userName = 'ESB_Q_FACESR';
     protected $password = 'facesr@esb';
 
-    public function __construct(string $flag = 'prod')
+    public function __construct($config = [])
     {
-        $this->flag = $flag;
-        $this->uri = $this->dev;
-        $this->headers = ["Authorization:Basic " . base64_encode($this->userName . ':' . $this->password), "Content-Type:text/plain"];
-        if ($this->flag == 'prod') {
-            $this->uri = $this->prod;
-            $this->userName = 'ESB_P_FACESR';
-            $this->password = 'facesrp@esb';
-            $this->headers = ["Authorization:Basic " . base64_encode($this->userName . ':' . $this->password), "Content-Type:text/plain"];
-            $this->reqsrcsys = 'BS-FACESR-P';
-            $this->reqtarsys = 'BS-SALEAPP2-P';
-        }
+        $this->uri = $config['uri'];
+        $this->reqsrcsys = $config['reqsrcsys'];
+        $this->reqtarsys = $config['reqtarsys'];
+        $this->headers = ["Authorization:Basic " . base64_encode($config['userName'] . ':' . $config['password']), "Content-Type:text/plain"];
+//        if ($this->flag == 'prod') {
+//            $this->uri = $this->prod;
+//            $this->userName = 'ESB_P_FACESR';
+//            $this->password = 'facesrp@esb';
+//            $this->headers = ["Authorization:Basic " . base64_encode($this->userName . ':' . $this->password), "Content-Type:text/plain"];
+//            $this->reqsrcsys = 'BS-FACESR-P';
+//            $this->reqtarsys = 'BS-SALEAPP2-P';
+//        }
         $this->client = new Client();
 
     }
