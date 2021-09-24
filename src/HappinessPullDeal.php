@@ -19,6 +19,8 @@ class HappinessPullDeal
         $this->uri = $config['uri'];
         $this->reqsrcsys = $config['reqsrcsys'];
         $this->reqtarsys = $config['reqtarsys'];
+        $this->userName = $config['userName'];
+        $this->password = $config['password'];
         $this->headers = ["Authorization:Basic " . base64_encode($config['userName'] . ':' . $config['password']), "Content-Type:text/plain"];
         $this->client = new Client();
 
@@ -57,8 +59,16 @@ class HappinessPullDeal
                 ],
             ],
         ];
-        $response = $this->client->post($this->uri, $paylod)->getBody()->getContents();
+
+        try {
+            $response = $this->client->post($this->uri, $paylod)->getBody()->getContents();
+        }catch (\Throwable $exception){
+            var_dump($exception->getMessage());
+            return [];
+        }
+
         $response = json_decode($response, true);
+
         if (!isset($response['E_RESPONSE']['RSP_BASEINFO']['RSP_STATUS_MSG'])) {
             return ['code' => 201, 'message' => '请求失败'];
         }
