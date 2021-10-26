@@ -2,7 +2,7 @@
     "name": "rongchuang/happiness-through",
     "type": "library",
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
         "guzzlehttp/guzzle": "~7.4.0"
     },
     "license": "MIT",
