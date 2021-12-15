@@ -62,7 +62,7 @@ class HappinessPullDeal
 
         try {
             $response = $this->client->post($this->uri, $paylod)->getBody()->getContents();
-        }catch (\Throwable $exception){
+        } catch (\Throwable $exception) {
             var_dump($exception->getMessage());
             return [];
         }
@@ -80,16 +80,18 @@ class HappinessPullDeal
         }
         $data = $response['E_RESPONSE']['MESSAGE']['RSP_ITEM']['APIRESPRESUL_TESB']['DATA'];
         foreach ($data as $key => $val) {
-            $reords[$key]['order_sn'] = $val['HOUSE_NAME'];
-            $reords[$key]['order_status'] = 0;
-            $reords[$key]['name'] = $val['CUS_NAME'];
-            $reords[$key]['card'] = $idCard;
-            $reords[$key]['adviser_name'] = $val['CONSULTANT_NAME'];
-            $reords[$key]['signing_time'] = substr($val['TRADE_DATE'], 0, 4) . '-' . substr($val['TRADE_DATE'], 4, 2) . '-' . substr($val['TRADE_DATE'], -2);
-            $reords[$key]['offer_buy_time'] = substr($val['RG_DATE'], 0, 4) . '-' . substr($val['RG_DATE'], 4, 2) . '-' . substr($val['RG_DATE'], -2);
-            $reords[$key]['customer_status'] = $val['CUS_STATE'];
-            $reords[$key]['chips_time'] = '';
+            $records[$key]['order_sn'] = $val['HOUSE_NAME'];
+            $records[$key]['order_status'] = 0;
+            $records[$key]['name'] = $val['CUS_NAME'];
+            $records[$key]['card'] = $idCard;
+            $records[$key]['adviser_name'] = $val['CONSULTANT_NAME'];
+            $records[$key]['signing_time'] = substr($val['TRADE_DATE'], 0, 4) . '-' . substr($val['TRADE_DATE'], 4, 2) . '-' . substr($val['TRADE_DATE'], -2);
+            $records[$key]['offer_buy_time'] = substr($val['RG_DATE'], 0, 4) . '-' . substr($val['RG_DATE'], 4, 2) . '-' . substr($val['RG_DATE'], -2);
+            $records[$key]['customer_status'] = $val['CUS_STATE'];
+            $records[$key]['chips_time'] = '';
+            $records[$key]['effective_report_time'] = $val['CUS_BAOBEI_TIME'];
+            $records[$key]['visit_time'] = $val['FIRST_VIST_TIME'];
         }
-        return $reords;
+        return $records;
     }
 }
