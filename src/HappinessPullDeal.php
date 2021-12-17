@@ -91,7 +91,13 @@ class HappinessPullDeal
             $records[$key]['chips_time'] = '';
             $records[$key]['effective_report_time'] = $val['CUS_BAOBEI_TIME'];
             $records[$key]['visit_time'] = $val['FIRST_VIST_TIME'];
+            $records[$key]['channel_name'] = $val['TWOQUDAO_NAME'];
+            $records[$key]['channel_type_id'] = $val['ONEQUDAO_NAME'];
         }
-        return $records;
+        $result = [
+            'oldData' => $data,
+            'newData' => $records,
+        ];
+        return $result;
     }
 }
