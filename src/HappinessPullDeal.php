@@ -93,6 +93,7 @@ class HappinessPullDeal
             $records[$key]['visit_time'] = $val['FIRST_VIST_TIME'];
             $records[$key]['channel_name'] = $val['TWOQUDAO_NAME'];
             $records[$key]['channel_type_id'] = $val['ONEQUDAO_NAME'];
+            $records[$key]['agent_name'] = $val['AGENT_NAME'];
         }
         $result = [
             'oldData' => $data,
